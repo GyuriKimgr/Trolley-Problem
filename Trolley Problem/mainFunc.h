@@ -13,6 +13,8 @@
 #define RIGHT 3
 #define SUBMIT 4
 
+#define DELAY 10000
+
 void hideCursor() { //±ô¹ÚÀÌ´Â Ä¿¼­ ¼û±è
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_CURSOR_INFO ConsoleCursor;
@@ -174,10 +176,23 @@ int trolley() {
     printf(" _¡Ý¡Ý¡Ý__¡Ý¡Ý¡Ý\n");
 }
 void playGame() {
+    srand(time(NULL));
+    time_t sTime, cTime;
+    int keyinput;
     while (1) {
-        system("cls");
-        track();
-        trolley();
-        int userInput = keyControl();
+        sTime = time(NULL) + 10;
+        while (1) {
+            cTime = time(NULL);
+            if (sTime - cTime >= 0) {
+                printf("%d seconds\n", sTime - cTime);
+            }
+            else if (sTime - cTime < 0) {
+                sTime = time(NULL) + 10;
+            }
+        }
+        
+            
+
+        
     }
 }

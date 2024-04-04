@@ -3,7 +3,6 @@
 int main(void) {
 	system("mode con:cols=80 lines=30");
 	hideCursor();
-	srand(GetTickCount());
 
 	while (1){
 	system("cls");
