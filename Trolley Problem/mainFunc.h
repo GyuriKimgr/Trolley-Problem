@@ -124,35 +124,35 @@ int question_2() {
 }
 int question_3() {
     printf("↑ Poor white parents placed their child in an orphanage with heavy heart\n");
-    printf("↓ 아이에게 과한 기대로 스트레스를 주는 돈 많은 아시안 부모\n");
+    printf("↓ Wealthy Asian parent who places excessive pressure on their child, causing stress\n");
 }
 int question_4() {
-    printf("↑ 1명의 사람\n");
-    printf("↓ 5명의 사람\n");
+    printf("↑ A person\n");
+    printf("↓ 5 people\n");
 }
 int question_5() {
-    printf("↑ 1명의 장애인\n");
-    printf("↓ 5명의 건장한 성인\n");
+    printf("↑ 1 disabled person\n");
+    printf("↓ 5 healthy man\n");
 }
 int question_6() {
-    printf("↑ 부정부패를 일삼는 정치가 5명\n");
-    printf("↓ 부정부패를 일삼는 기업가 1명\n");
+    printf("↑ 5 corrupt politicians\n");
+    printf("↓ 1 corrupt CEO\n");
 }
 int question_7() {
-    printf("↑ 아주 귀여운 고양이 한마리\n");
-    printf("↓ 5명의 어린이들\n");
+    printf("↑ ♡♥AdOrAbLe kItTy♥♡ \n");
+    printf("↓ 5 children\n");
 }
 int question_8() {
-    printf("↑ 살아있는 파릇파릇한 나무 10그루\n");
-    printf("↓ 죽어있는 차가운 고기 10kg\n");
+    printf("↑ 10 Beautiful Trees\n");
+    printf("↓ Dead, Cold meats 22 pounds(10kg)\n");
 }
 int question_9() {
-    printf("↑ 전세계에 하나밖에 없는 완벽한 양자컴퓨터\n");
-    printf("↓ 열심히 살아온 개발자 5명\n");
+    printf("↑ The only perfect quantum computer in the world\n");
+    printf("↓ 5 hardworking developers\n");
 }
 int question_10() {
-    printf("↑ 당신의 10년지기 친구\n");
-    printf("↓ 당신의 10년지기 친구의 사촌\n");
+    printf("↑ your old friend\n");
+    printf("↓ your old friend's cousin\n");
 }
 
 int track() {
