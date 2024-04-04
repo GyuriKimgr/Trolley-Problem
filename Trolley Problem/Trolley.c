@@ -9,7 +9,7 @@ int main(void) {
 	system("cls");
 	int menuCode = drawMenu();
 	if (menuCode == 0) {
-		system("cls");
+		playGame();
 	}
 	else if (menuCode == 1) {
 		HowtoPlay();

@@ -92,18 +92,7 @@ int drawMenu() {
         }
     }
 }
-int track() {
-    printf("                                        |---|---|---|---|---|---|---|---|---|\n");
-    printf("                                    |---|---|\n");
-    printf("|---|---|---|---|---|---|---|---|---|---|\n");
-    printf("                                    |---|---|\n");
-    printf("                                        |---|---|---|---|---|---|---|---|---|\n");
-}
-int trolley() {
-    printf(" ______________\n");
-    printf("|▣▣▣▣▣▣▣|\n");
-    printf(" _◎◎◎__◎◎◎\n");
-}
+
 void HowtoPlay() { //게임정보출력
     system("cls");
     printf("\n\n\n");
@@ -123,5 +112,72 @@ void HowtoPlay() { //게임정보출력
     while (1) {
         if (keyControl() == SUBMIT);
         break;
+    }
+}
+int question_1() {
+    printf("↑ Abandoned baby\n");
+    printf("↓ Abandoned elderly person\n");
+}
+int question_2() {
+    printf("↑ A man who has rap sheets but who can doing 10 people's job\n");
+    printf("↓ A man who can't doing even 1 person's job\n");
+}
+int question_3() {
+    printf("↑ Poor white parents placed their child in an orphanage with heavy heart\n");
+    printf("↓ 아이에게 과한 기대로 스트레스를 주는 돈 많은 아시안 부모\n");
+}
+int question_4() {
+    printf("↑ 1명의 사람\n");
+    printf("↓ 5명의 사람\n");
+}
+int question_5() {
+    printf("↑ 1명의 장애인\n");
+    printf("↓ 5명의 건장한 성인\n");
+}
+int question_6() {
+    printf("↑ 부정부패를 일삼는 정치가 5명\n");
+    printf("↓ 부정부패를 일삼는 기업가 1명\n");
+}
+int question_7() {
+    printf("↑ 아주 귀여운 고양이 한마리\n");
+    printf("↓ 5명의 어린이들\n");
+}
+int question_8() {
+    printf("↑ 살아있는 파릇파릇한 나무 10그루\n");
+    printf("↓ 죽어있는 차가운 고기 10kg\n");
+}
+int question_9() {
+    printf("↑ 전세계에 하나밖에 없는 완벽한 양자컴퓨터\n");
+    printf("↓ 열심히 살아온 개발자 5명\n");
+}
+int question_10() {
+    printf("↑ 당신의 10년지기 친구\n");
+    printf("↓ 당신의 10년지기 친구의 사촌\n");
+}
+
+int track() {
+    int x = 0, y = 8;
+    gotoxy(x, y);
+    printf("                                        |---|---|---|---|---|---|---|---|---|\n");
+    printf("                                    |---|---|\n");
+    printf("|---|---|---|---|---|---|---|---|---|---|\n");
+    printf("                                    |---|---|\n");
+    printf("                                        |---|---|---|---|---|---|---|---|---|\n");
+}
+int trolley() {
+    int x = 10, y = 7;
+    gotoxy(x, y);
+    printf(" ______________\n");
+    gotoxy(x, y+1);
+    printf("|▣▣▣▣▣▣▣|\n");
+    gotoxy(x, y+2);
+    printf(" _◎◎◎__◎◎◎\n");
+}
+void playGame() {
+    while (1) {
+        system("cls");
+        track();
+        trolley();
+        int userInput = keyControl();
     }
 }
