@@ -296,6 +296,7 @@ void playGame() {
         do{//timer
             cTime = time(NULL);
             if (sTime - cTime >= 0) { 
+                gotoxy(x, y);
                 printCountdown(sTime - cTime);  
                 Sleep(1000);
             }
