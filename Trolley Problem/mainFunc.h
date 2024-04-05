@@ -15,6 +15,9 @@
 
 #define DELAY 10000
 
+#define MINT_COLOR 10
+#define DEFALT_COLOR 15
+
 void hideCursor() { //깜박이는 커서 숨김
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_CURSOR_INFO ConsoleCursor;
@@ -31,6 +34,7 @@ void printCountdown(int seconds) { //카운트다운 출력
     printf("\r%d seconds ", seconds); //공백으로 덮어쓰기
     fflush(stdout); //출력버퍼 지우기
 }
+
 int keyControl()//키보드 이벤트 처리
 {
     char temp = _getch();//키보드 입력
@@ -124,10 +128,21 @@ int question_1() {
     printf("▲\n");
     gotoxy(x + 54, y + 11);
     printf("○\n");
-    gotoxy(x+25, y + 15);
-    printf("↑ Abandoned baby\n");
-    gotoxy(x+25, y+17);
-    printf("↓ Abandoned elderly person\n");
+    while (1) {
+        int n = keyControl();
+        if (n == 0) { SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), MINT_COLOR); }
+        else {
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+        }
+        gotoxy(x + 25, y + 15);
+        printf("↑ Abandoned baby\n");
+        if (n == 1) { SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), MINT_COLOR); }
+        else {
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+        }
+        gotoxy(x + 25, y + 17);
+        printf("↓ Abandoned elderly person\n");
+    }
 }
 int question_2() {
     int x = 0, y = 0;
@@ -257,6 +272,20 @@ void playGame() {
         system("cls");
         sTime = time(NULL) + 10;
         int timerE = 0;
+        do {//timer
+            cTime = time(NULL);
+            if (sTime - cTime >= 0) {
+                gotoxy(x, y);
+                printCountdown(sTime - cTime);
+                Sleep(1000);
+            }
+            else {
+                timerE = 1;
+                break;
+            }
+        } while (1);
+        track();
+            trolley();
         switch (c) {
         case 1:
             question_1();
@@ -289,22 +318,6 @@ void playGame() {
             question_10();
             break;
         }
-        track();
-        trolley();
-        
-
-        do{//timer
-            cTime = time(NULL);
-            if (sTime - cTime >= 0) { 
-                gotoxy(x, y);
-                printCountdown(sTime - cTime);  
-                Sleep(1000);
-            }
-            else {
-                timerE = 1;
-                break;
-            }
-        } while (1);
 
         if (timerE) {
             c++;
