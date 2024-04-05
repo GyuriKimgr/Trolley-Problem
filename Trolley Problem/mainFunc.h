@@ -1,4 +1,4 @@
-#include <stdio.h>
+Ôªø#include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
 #include <conio.h>
@@ -15,23 +15,25 @@
 
 #define DELAY 10000
 
-void hideCursor() { //±Ùπ⁄¿Ã¥¬ ƒøº≠ º˚±Ë
+void hideCursor() { //ÍπúÎ∞ïÏù¥Îäî Ïª§ÏÑú Ïà®ÍπÄ
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_CURSOR_INFO ConsoleCursor;
     ConsoleCursor.bVisible = 0;
     ConsoleCursor.dwSize = 1;
     SetConsoleCursorInfo(consoleHandle, &ConsoleCursor);
 }
-void gotoxy(int x, int y) { //x, y ¡¬«• º≥¡§
+void gotoxy(int x, int y) { //x, y Ï¢åÌëú ÏÑ§Ï†ï
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-    COORD pos;
-    pos.X = x;
-    pos.Y = y;
+    COORD pos = {x, y};
     SetConsoleCursorPosition(consoleHandle, pos);
 }
-int keyControl()//≈∞∫∏µÂ ¿Ã∫•∆Æ √≥∏Æ
+void printCountdown(int seconds) { //Ïπ¥Ïö¥Ìä∏Îã§Ïö¥ Ï∂úÎ†•
+    printf("\r%d seconds ", seconds); //Í≥µÎ∞±ÏúºÎ°ú ÎçÆÏñ¥Ïì∞Í∏∞
+    fflush(stdout); //Ï∂úÎ†•Î≤ÑÌçº ÏßÄÏö∞Í∏∞
+}
+int keyControl()//ÌÇ§Î≥¥Îìú Ïù¥Î≤§Ìä∏ Ï≤òÎ¶¨
 {
-    char temp = _getch();//≈∞∫∏µÂ ¿‘∑¬
+    char temp = _getch();//ÌÇ§Î≥¥Îìú ÏûÖÎ†•
     if (temp == 'w' || temp == 'W') return UP;
     else if (temp == 'a' || temp == 'A') return LEFT;
     else if (temp == 's' || temp == 'S') return DOWN;
@@ -39,7 +41,7 @@ int keyControl()//≈∞∫∏µÂ ¿Ã∫•∆Æ √≥∏Æ
     else if (temp == ' ') return SUBMIT;
 }
 int drawMenu() {
-    int x = 35, y = 20; //∏ﬁ¥∫ ¿ßƒ° º≥¡§
+    int x = 35, y = 20; //Î©îÎâ¥ ÏúÑÏπò ÏÑ§Ï†ï
     printf("\n\n\n");
 	printf("++===========================================================================++\n");
 	printf("++===========================================================================++\n");
@@ -66,10 +68,10 @@ int drawMenu() {
 
     while (1)
     {
-        int n = keyControl();//≈∞∫∏µÂ ¿‘∑¬
+        int n = keyControl();//ÌÇ§Î≥¥Îìú ÏûÖÎ†•
         switch (n)
         {
-        case UP: //∏ﬁ¥∫ ¿ßæ∆∑° π¸¿ß ¡ˆ¡§
+        case UP: //Î©îÎâ¥ ÏúÑÏïÑÎûò Î≤îÏúÑ ÏßÄÏ†ï
             if (y > 20)
             {
                 gotoxy(x - 2, y);
@@ -90,12 +92,12 @@ int drawMenu() {
             break;
 
         case SUBMIT:
-            return y - 20;// 0, 1, 2∑Œ ∏ﬁ¥∫ƒ⁄µÂ π›»Ø
+            return y - 20;// 0, 1, 2Î°ú Î©îÎâ¥ÏΩîÎìú Î∞òÌôò
         }
     }
 }
 
-void HowtoPlay() { //∞‘¿”¡§∫∏√‚∑¬
+void HowtoPlay() { //Í≤åÏûÑÏ†ïÎ≥¥Ï∂úÎ†•
     system("cls");
     printf("\n\n\n");
     printf("++===========================================================================++\n");
@@ -117,44 +119,114 @@ void HowtoPlay() { //∞‘¿”¡§∫∏√‚∑¬
     }
 }
 int question_1() {
-    printf("°Ë Abandoned baby\n");
-    printf("°È Abandoned elderly person\n");
+    int x = 0, y = 0;
+    gotoxy(x + 54, y + 7);
+    printf("‚ñ≤\n");
+    gotoxy(x + 54, y + 11);
+    printf("‚óã\n");
+    gotoxy(x+25, y + 15);
+    printf("‚Üë Abandoned baby\n");
+    gotoxy(x+25, y+17);
+    printf("‚Üì Abandoned elderly person\n");
 }
 int question_2() {
-    printf("°Ë A man who has rap sheets but who can doing 10 people's job\n");
-    printf("°È A man who can't doing even 1 person's job\n");
+    int x = 0, y = 0;
+    gotoxy(x + 54, y + 7);
+    printf("‚óè\n");
+    gotoxy(x + 54, y + 11);
+    printf("‚óã\n");
+    gotoxy(x + 10, y + 15);
+    printf("‚Üë A man who has rap sheets but who can doing 10 people's job\n");
+    gotoxy(x + 10, y + 17);
+    printf("‚Üì A man who can't doing even 1 person's job\n");
 }
 int question_3() {
-    printf("°Ë Poor white parents placed their child in an orphanage with heavy heart\n");
-    printf("°È Wealthy Asian parent who places excessive pressure on their child, causing stress\n");
+    int x = 0, y = 0;
+    gotoxy(x + 54, y + 7);
+    printf("‚óã‚óã\n");
+    gotoxy(x + 54, y + 11);
+    printf("‚óã‚óã\n");
+    gotoxy(x + 5, y + 15);
+    printf("‚Üë Poor white parents placed their child in an orphanage with heavy heart\n");
+    gotoxy(x + 5, y + 17);
+    printf("‚Üì Wealthy Asian parent who places excessive pressure on their child, \n       causing stress\n");
 }
 int question_4() {
-    printf("°Ë A person\n");
-    printf("°È 5 people\n");
+    int x = 0, y = 0;
+    gotoxy(x + 54, y + 7);
+    printf("‚óã\n");
+    gotoxy(x + 54, y + 11);
+    printf("‚óã‚óã‚óã‚óã‚óã\n");
+    gotoxy(x + 30, y + 15);
+    printf("‚Üë A person\n");
+    gotoxy(x + 30, y + 17);
+    printf("‚Üì 5 people\n");
 }
 int question_5() {
-    printf("°Ë 1 disabled person\n");
-    printf("°È 5 healthy man\n");
+    int x = 0, y = 0;
+    gotoxy(x + 54, y + 7);
+    printf("‚óê\n");
+    gotoxy(x + 54, y + 11);
+    printf("‚óã‚óã‚óã‚óã‚óã\n");
+    gotoxy(x + 30, y + 15);
+    printf("‚Üë 1 disabled person\n");
+    gotoxy(x + 30, y + 17);
+    printf("‚Üì 5 healthy man\n");
 }
 int question_6() {
-    printf("°Ë 5 corrupt politicians\n");
-    printf("°È 1 corrupt CEO\n");
+    int x = 0, y = 0;
+    gotoxy(x + 54, y + 7);
+    printf("‚óè‚óè‚óè‚óè‚óè\n");
+    gotoxy(x + 54, y + 11);
+    printf("‚óè\n");
+    gotoxy(x + 25, y + 15);
+    printf("‚Üë 5 corrupt politicians\n");
+    gotoxy(x + 25, y + 17);
+    printf("‚Üì 1 corrupt CEO\n");
 }
 int question_7() {
-    printf("°Ë ¢Ω¢æAdOrAbLe kItTy¢æ¢Ω \n");
-    printf("°È 5 children\n");
+    int x = 0, y = 0;
+    gotoxy(x + 54, y + 7);
+    printf("‚ô•\n");
+    gotoxy(x + 54, y + 11);
+    printf("‚ñ≤‚ñ≤‚ñ≤‚ñ≤‚ñ≤\n");
+    gotoxy(x + 25, y + 15);
+    printf("‚Üë ‚ô°‚ô•AdOrAbLe kItTy‚ô•‚ô° \n");
+    gotoxy(x + 25, y + 17);
+    printf("‚Üì 5 children\n");
 }
 int question_8() {
-    printf("°Ë 10 Beautiful Trees\n");
-    printf("°È Dead, Cold meats 22 pounds(10kg)\n");
+    int x = 0, y = 0;
+    gotoxy(x + 54, y + 7);
+    printf("‚ñÆ‚ñÆ‚ñÆ‚ñÆ‚ñÆ‚ñÆ‚ñÆ‚ñÆ‚ñÆ‚ñÆ\n");
+    gotoxy(x + 54, y + 11);
+    printf("‚óé\n");
+    gotoxy(x + 25, y + 15);
+    printf("‚Üë 10 Beautiful Trees\n");
+    gotoxy(x + 25, y + 17);
+    printf("‚Üì Dead, Cold meats 22 pounds(10kg)\n");
 }
 int question_9() {
-    printf("°Ë The only perfect quantum computer in the world\n");
-    printf("°È 5 hardworking developers\n");
+    int x = 0, y = 0;
+    gotoxy(x + 54, y + 7);
+    printf("‚ñ£\n");
+    gotoxy(x + 54, y + 10);
+    printf("‚óã‚óã‚óã‚óã‚óã\n");
+    gotoxy(x + 25, y + 15);
+    printf("‚Üë The only perfect quantum computer in the world\n");
+    gotoxy(x + 25, y + 17);
+    printf("‚Üì 5 hardworking developers\n");
 }
 int question_10() {
-    printf("°Ë your old friend\n");
-    printf("°È your old friend's cousin\n");
+    int x = 0 , y = 0;
+    gotoxy(x + 54, y + 7);
+    printf("‚óã\n");
+    gotoxy(x + 54, y + 10);
+    printf("‚óã\n");
+    gotoxy(x + 25, y + 15);
+    printf("‚Üë your old friend\n");
+    gotoxy(x + 25, y + 17);
+    printf("‚Üì your old friend's cousin\n");
 }
 
 int track() {
@@ -171,28 +243,72 @@ int trolley() {
     gotoxy(x, y);
     printf(" ______________\n");
     gotoxy(x, y+1);
-    printf("|¢√¢√¢√¢√¢√¢√¢√|\n");
+    printf("|‚ñ£‚ñ£‚ñ£‚ñ£‚ñ£‚ñ£‚ñ£|\n");
     gotoxy(x, y+2);
-    printf(" _°›°›°›__°›°›°›\n");
+    printf(" _‚óé‚óé‚óé__‚óé‚óé‚óé\n");
 }
 void playGame() {
+    int x = 0, y = 0;
     srand(time(NULL));
     time_t sTime, cTime;
+    int c = 1;
     int keyinput;
-    while (1) {
+    while (c <= 10) {
+        system("cls");
         sTime = time(NULL) + 10;
-        while (1) {
-            cTime = time(NULL);
-            if (sTime - cTime >= 0) {
-                printf("%d seconds\n", sTime - cTime);
-            }
-            else if (sTime - cTime < 0) {
-                sTime = time(NULL) + 10;
-            }
+        int timerE = 0;
+        switch (c) {
+        case 1:
+            question_1();
+            break;
+        case 2:
+            question_2();
+            break;
+        case 3:
+            question_3();
+            break;
+        case 4:
+            question_4();
+            break;
+        case 5:
+            question_5();
+            break;
+        case 6:
+            question_6();
+            break;
+        case 7:
+            question_7();
+            break;
+        case 8:
+            question_8();
+            break;
+        case 9:
+            question_9();
+            break;
+        case 10:
+            question_10();
+            break;
         }
+        track();
+        trolley();
         
-            
 
-        
+        do{//timer
+            cTime = time(NULL);
+            if (sTime - cTime >= 0) { 
+                printCountdown(sTime - cTime);  
+                Sleep(1000);
+            }
+            else {
+                timerE = 1;
+                break;
+            }
+        } while (1);
+
+        if (timerE) {
+            c++;
+        }
+       Sleep(1000);
+       system("cls");
     }
 }
