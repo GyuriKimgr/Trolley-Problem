@@ -123,27 +123,43 @@ void HowtoPlay() { //게임정보출력
     }
 }
 int question_1() {
-    int x = 0, y = 0;
-    gotoxy(x + 54, y + 7);
-    printf("▲\n");
-    gotoxy(x + 54, y + 11);
+    int x = 0, y = 15; // 초기 위치 설정
+    gotoxy(x + 54, 7);
+    printf("●\n");
+    gotoxy(x + 54, 11);
     printf("○\n");
     while (1) {
-        int n = keyControl();
-        if (n == 0) { SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), MINT_COLOR); }
-        else {
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
-        }
-        gotoxy(x + 25, y + 15);
+        // 선택지 출력 전에 해당 위치에 배경 칠하기
+        gotoxy(x + 25, 15);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
         printf("↑ Abandoned baby\n");
-        if (n == 1) { SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), MINT_COLOR); }
-        else {
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
-        }
-        gotoxy(x + 25, y + 17);
+        gotoxy(x + 25, 17);
         printf("↓ Abandoned elderly person\n");
+
+        // 현재 위치에 따라 색상 변경
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), MINT_COLOR);
+        if (y == 15) {
+            gotoxy(x + 25, 15);
+            printf("↑ Abandoned baby\n");
+        }
+        else {
+            gotoxy(x + 25, 17);
+            printf("↓ Abandoned elderly person\n");
+        }
+
+        char temp = _getch();
+        if (temp == 'w' || temp == 'W') {
+            if (y > 15) y--;
+        }
+        else if (temp == 's' || temp == 'S') {
+            if (y < 17) y++;
+        }
     }
 }
+
+
+    
+    
 int question_2() {
     int x = 0, y = 0;
     gotoxy(x + 54, y + 7);
@@ -270,22 +286,10 @@ void playGame() {
     int keyinput;
     while (c <= 10) {
         system("cls");
+        track();
+        trolley();
         sTime = time(NULL) + 10;
         int timerE = 0;
-        do {//timer
-            cTime = time(NULL);
-            if (sTime - cTime >= 0) {
-                gotoxy(x, y);
-                printCountdown(sTime - cTime);
-                Sleep(1000);
-            }
-            else {
-                timerE = 1;
-                break;
-            }
-        } while (1);
-        track();
-            trolley();
         switch (c) {
         case 1:
             question_1();
@@ -318,6 +322,18 @@ void playGame() {
             question_10();
             break;
         }
+        do {//timer
+            cTime = time(NULL);
+            if (sTime - cTime >= 0) {
+                gotoxy(x, y);
+                printCountdown(sTime - cTime);
+                Sleep(1000);
+            }
+            else {
+                timerE = 1;
+                break;
+            }
+        } while (1);
 
         if (timerE) {
             c++;
