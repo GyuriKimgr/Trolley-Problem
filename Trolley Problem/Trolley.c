@@ -9,6 +9,7 @@ int main(void) {
 	int menuCode = drawMenu();
 	if (menuCode == 0) {
 		playGame();
+		break;
 	}
 	else if (menuCode == 1) {
 		HowtoPlay();
