@@ -1,4 +1,4 @@
-#include <stdio.h>
+Ôªø#include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
 #include <conio.h>
@@ -13,31 +13,73 @@
 #define RIGHT 3
 #define SUBMIT 4
 
-void hideCursor() { //±Ùπ⁄¿Ã¥¬ ƒøº≠ º˚±Ë
+#define DELAY 10000
+
+#define MINT_COLOR 10
+#define DEFALT_COLOR 15
+int q1 = 0;
+int q2 = 0;
+int q3 = 0;
+int q4 = 0;
+int q5 = 0;
+int q6 = 0;
+int q7 = 0;
+int q8 = 0;
+int q9 = 0;
+int q10 = 0;
+
+void hideCursor() { //ÍπúÎ∞ïÏù¥Îäî Ïª§ÏÑú Ïà®ÍπÄ
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_CURSOR_INFO ConsoleCursor;
     ConsoleCursor.bVisible = 0;
     ConsoleCursor.dwSize = 1;
     SetConsoleCursorInfo(consoleHandle, &ConsoleCursor);
 }
-void gotoxy(int x, int y) { //x, y ¡¬«• º≥¡§
+void gotoxy(int x, int y) { //x, y Ï¢åÌëú ÏÑ§Ï†ï
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-    COORD pos;
-    pos.X = x;
-    pos.Y = y;
+    COORD pos = {x, y};
     SetConsoleCursorPosition(consoleHandle, pos);
 }
-int keyControl()//≈∞∫∏µÂ ¿Ã∫•∆Æ √≥∏Æ
+void printCountdown(int seconds) { // Ïπ¥Ïö¥Ìä∏Îã§Ïö¥ Ï∂úÎ†•
+    printf("\r%d seconds ", seconds); // Í≥µÎ∞±ÏúºÎ°ú ÎçÆÏñ¥Ïì∞Í∏∞
+    fflush(stdout); // Ï∂úÎ†•Î≤ÑÌçº ÏßÄÏö∞Í∏∞
+}
+void timerLoop() {
+    time_t sTime, cTime;
+    int c = 1;
+    while (c <= 10) {
+        sTime = time(NULL) + 10;
+        int timerE = 0;
+        do { // timer
+            cTime = time(NULL);
+            if (sTime - cTime >= 0) {
+                printCountdown(sTime - cTime);
+                Sleep(1000);
+            }
+            else {
+                timerE = 1;
+                break;
+            }
+        } while (1);
+
+        if (timerE) {
+            c++;
+        }
+    }
+}
+
+int keyControl()//ÌÇ§Î≥¥Îìú Ïù¥Î≤§Ìä∏ Ï≤òÎ¶¨
 {
-    char temp = _getch();//≈∞∫∏µÂ ¿‘∑¬
+    char temp = _getch();//ÌÇ§Î≥¥Îìú ÏûÖÎ†•
     if (temp == 'w' || temp == 'W') return UP;
     else if (temp == 'a' || temp == 'A') return LEFT;
     else if (temp == 's' || temp == 'S') return DOWN;
     else if (temp == 'd' || temp == 'D') return RIGHT;
     else if (temp == ' ') return SUBMIT;
 }
+
 int drawMenu() {
-    int x = 35, y = 20; //∏ﬁ¥∫ ¿ßƒ° º≥¡§
+    int x = 35, y = 20; //Î©îÎâ¥ ÏúÑÏπò ÏÑ§Ï†ï
     printf("\n\n\n");
 	printf("++===========================================================================++\n");
 	printf("++===========================================================================++\n");
@@ -64,10 +106,10 @@ int drawMenu() {
 
     while (1)
     {
-        int n = keyControl();//≈∞∫∏µÂ ¿‘∑¬
+        int n = keyControl();//ÌÇ§Î≥¥Îìú ÏûÖÎ†•
         switch (n)
         {
-        case UP: //∏ﬁ¥∫ ¿ßæ∆∑° π¸¿ß ¡ˆ¡§
+        case UP: //Î©îÎâ¥ ÏúÑÏïÑÎûò Î≤îÏúÑ ÏßÄÏ†ï
             if (y > 20)
             {
                 gotoxy(x - 2, y);
@@ -88,12 +130,12 @@ int drawMenu() {
             break;
 
         case SUBMIT:
-            return y - 20;// 0, 1, 2∑Œ ∏ﬁ¥∫ƒ⁄µÂ π›»Ø
+            return y - 20;// 0, 1, 2Î°ú Î©îÎâ¥ÏΩîÎìú Î∞òÌôò
         }
     }
 }
 
-void HowtoPlay() { //∞‘¿”¡§∫∏√‚∑¬
+void HowtoPlay() { //Í≤åÏûÑÏ†ïÎ≥¥Ï∂úÎ†•
     system("cls");
     printf("\n\n\n");
     printf("++===========================================================================++\n");
@@ -115,48 +157,382 @@ void HowtoPlay() { //∞‘¿”¡§∫∏√‚∑¬
     }
 }
 int question_1() {
-    printf("°Ë Abandoned baby\n");
-    printf("°È Abandoned elderly person\n");
+    gotoxy(0, 0);
+    int x = 0, y = 15; // Ï¥àÍ∏∞ ÏúÑÏπò ÏÑ§Ï†ï
+    gotoxy(x + 54, 7);
+    printf("‚óè\n");
+    gotoxy(x + 54, 11);
+    printf("‚óã\n");
+    while (1) {
+        // ÏÑ†ÌÉùÏßÄ Ï∂úÎ†• Ï†ÑÏóê Ìï¥Îãπ ÏúÑÏπòÏóê Î∞∞Í≤Ω Ïπ†ÌïòÍ∏∞
+        gotoxy(x + 25, 15);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+        printf("‚Üë Abandoned baby\n");
+        gotoxy(x + 25, 17);
+        printf("‚Üì Abandoned elderly person\n");
+
+
+        // ÌòÑÏû¨ ÏúÑÏπòÏóê Îî∞Îùº ÏÉâÏÉÅ Î≥ÄÍ≤Ω
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), MINT_COLOR);
+        if (y == 15) {
+            gotoxy(x + 25, 15);
+            printf("‚Üë Abandoned baby\n");
+        }
+        else {
+            gotoxy(x + 25, 17);
+            printf("‚Üì Abandoned elderly person\n");
+        }
+        char temp = _getch();
+        if (temp == 'w' || temp == 'W') {
+            if (y > 15) y--;
+        }
+        else if (temp == 's' || temp == 'S') {
+            if (y < 17) y++;
+        }
+        else if (temp == ' ') {
+            if (y > 15) q1 = 1;
+            break;
+        }
+    }
 }
+
 int question_2() {
-    printf("°Ë A man who has rap sheets but who can doing 10 people's job\n");
-    printf("°È A man who can't doing even 1 person's job\n");
+    gotoxy(0, 0);
+    int x = 0, y = 15;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+    gotoxy(x + 54, 7);
+    printf("‚óè\n");
+    gotoxy(x + 54, 11);
+    printf("‚óã\n");
+    while (1) {
+        gotoxy(x + 10, 15);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+        printf("‚Üë A man who has rap sheets but who can doing 10 people's job\n");
+        gotoxy(x + 10, 17);
+        printf("‚Üì A man who can't doing even 1 person's job\n");
+
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), MINT_COLOR);
+        if (y == 15) {
+            gotoxy(x + 10, 15);
+            printf("‚Üë A man who has rap sheets but who can doing 10 people's job\n");
+        }
+        else {
+            gotoxy(x + 10, 17);
+            printf("‚Üì A man who can't doing even 1 person's job\n");
+        }
+        char temp = _getch();
+        if (temp == 'w' || temp == 'W') {
+            if (y > 15) y--;
+        }
+        else if (temp == 's' || temp == 'S') {
+            if (y < 17) y++;
+        }
+        else if (temp == ' ') {
+            if (y > 15) q2 = 1;
+            break;
+        }
+    }
 }
 int question_3() {
-    printf("°Ë Poor white parents placed their child in an orphanage with heavy heart\n");
-    printf("°È æ∆¿Ãø°∞‘ ∞˙«— ±‚¥Î∑Œ Ω∫∆Æ∑πΩ∫∏¶ ¡÷¥¬ µ∑ ∏π¿∫ æ∆Ω√æ» ∫Œ∏\n");
+    gotoxy(0, 0);
+    int x = 0, y = 15;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+    gotoxy(x + 54, 7);
+    printf("‚óã‚óã\n");
+    gotoxy(x + 54, 11);
+    printf("‚óã‚óã\n");
+    while (1) {
+        gotoxy(x + 5, 15);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+        printf("‚Üë Poor white parents placed their child in an orphanage with heavy heart\n");
+        gotoxy(x + 5, 17);
+        printf("‚Üì Wealthy Asian parent who places excessive pressure on their child, \n\tcausing stress\n");
+
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), MINT_COLOR);
+        if (y == 15) {
+            gotoxy(x + 5, 15);
+            printf("‚Üë Poor white parents placed their child in an orphanage with heavy heart\n");
+        }
+        else {
+            gotoxy(x + 5, 17);
+            printf("‚Üì Wealthy Asian parent who places excessive pressure on their child, \n\tcausing stress\n");
+        }
+        char temp = _getch();
+        if (temp == 'w' || temp == 'W') {
+            if (y > 15) y--;
+        }
+        else if (temp == 's' || temp == 'S') {
+            if (y < 17) y++;
+        }
+        else if (temp == ' ') {
+            if (y > 15) q3 = 1;
+            break;
+        }
+    }
 }
 int question_4() {
-    printf("°Ë 1∏Ì¿« ªÁ∂˜\n");
-    printf("°È 5∏Ì¿« ªÁ∂˜\n");
+    gotoxy(0, 0);
+    int x = 0, y = 15;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+    gotoxy(x + 54, 7);
+    printf("‚óã\n");
+    gotoxy(x + 54, 11);
+    printf("‚óã‚óã‚óã‚óã‚óã\n");
+    while (1) {
+        gotoxy(x + 30, 15);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+        printf("‚Üë A person\n");
+        gotoxy(x + 30, 17);
+        printf("‚Üì 5 people\n");
+
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), MINT_COLOR);
+        if (y == 15) {
+            gotoxy(x + 30, 15);
+            printf("‚Üë A person\n");
+        }
+        else {
+            gotoxy(x + 30, 17);
+            printf("‚Üì 5 people\n");
+        }
+        char temp = _getch();
+        if (temp == 'w' || temp == 'W') {
+            if (y > 15) y--;
+        }
+        else if (temp == 's' || temp == 'S') {
+            if (y < 17) y++;
+        }
+        else if (temp == ' ') {
+            if (y > 15) q4 = 1;
+            break;
+        }
+    }
 }
 int question_5() {
-    printf("°Ë 1∏Ì¿« ¿Âæ÷¿Œ\n");
-    printf("°È 5∏Ì¿« ∞«¿Â«— º∫¿Œ\n");
+    gotoxy(0, 0);
+    int x = 0, y = 15;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+    gotoxy(x + 54, 7);
+    printf("‚óê\n");
+    gotoxy(x + 54, 11);
+    printf("‚óã‚óã‚óã‚óã‚óã\n");
+    while (1) {
+        gotoxy(x + 30, 15);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+        printf("‚Üë 1 disabled person\n");
+        gotoxy(x + 30, 17);
+        printf("‚Üì 5 healthy man\n");
+
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), MINT_COLOR);
+        if (y == 15) {
+            gotoxy(x + 30, 15);
+            printf("‚Üë 1 disabled person\n");
+        }
+        else {
+            gotoxy(x + 30, 17);
+            printf("‚Üì 5 healthy man\n");
+        }
+        char temp = _getch();
+        if (temp == 'w' || temp == 'W') {
+            if (y > 15) y--;
+        }
+        else if (temp == 's' || temp == 'S') {
+            if (y < 17) y++;
+        }
+        else if (temp == ' ') {
+            if (y > 15) q5 = 1;
+            break;
+        }
+    }
 }
 int question_6() {
-    printf("°Ë ∫Œ¡§∫Œ∆–∏¶ ¿œªÔ¥¬ ¡§ƒ°∞° 5∏Ì\n");
-    printf("°È ∫Œ¡§∫Œ∆–∏¶ ¿œªÔ¥¬ ±‚æ˜∞° 1∏Ì\n");
+    gotoxy(0, 0);
+    int x = 0, y = 15;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+    gotoxy(x + 54, 7);
+    printf("‚óè‚óè‚óè‚óè‚óè\n");
+    gotoxy(x + 54, 11);
+    printf("‚óè\n");
+    while (1) {
+        gotoxy(x + 30, 15);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+        printf("‚Üë 5 corrupt politicians\n");
+        gotoxy(x + 30, 17);
+        printf("‚Üì 1 corrupt CEO\n");
+
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), MINT_COLOR);
+        if (y == 15) {
+            gotoxy(x + 30, 15);
+            printf("‚Üë 5 corrupt politicians\n");
+        }
+        else {
+            gotoxy(x + 30, 17);
+            printf("‚Üì 1 corrupt CEO\n");
+        }
+        char temp = _getch();
+        if (temp == 'w' || temp == 'W') {
+            if (y > 15) y--;
+        }
+        else if (temp == 's' || temp == 'S') {
+            if (y < 17) y++;
+        }
+        else if (temp == ' ') {
+            if (y > 15) q6 = 1;
+            break;
+        }
+    }
 }
 int question_7() {
-    printf("°Ë æ∆¡÷ ±Õø©øÓ ∞ÌæÁ¿Ã «—∏∂∏Æ\n");
-    printf("°È 5∏Ì¿« æÓ∏∞¿ÃµÈ\n");
+    gotoxy(0, 0);
+    int x = 0, y = 15;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+    gotoxy(x + 54, 7);
+    printf("‚ô•\n");
+    gotoxy(x + 54, 11);
+    printf("‚ñ≤‚ñ≤‚ñ≤‚ñ≤‚ñ≤\n");
+    while (1) {
+        gotoxy(x + 30, 15);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+        printf("‚Üë ‚ô°‚ô•AdOrAbLe kItTy‚ô•‚ô° \n");
+        gotoxy(x + 30, 17);
+        printf("‚Üì 5 children\n");
+
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), MINT_COLOR);
+        if (y == 15) {
+            gotoxy(x + 30, 15);
+            printf("‚Üë ‚ô°‚ô•AdOrAbLe kItTy‚ô•‚ô° \n");
+        }
+        else {
+            gotoxy(x + 30, 17);
+            printf("‚Üì 5 children\n");
+        }
+        char temp = _getch();
+        if (temp == 'w' || temp == 'W') {
+            if (y > 15) y--;
+        }
+        else if (temp == 's' || temp == 'S') {
+            if (y < 17) y++;
+        }
+        else if (temp == ' ') {
+            if (y > 15) q7 = 1;
+            break;
+        }
+    }
 }
 int question_8() {
-    printf("°Ë ªÏæ∆¿÷¥¬ ∆ƒ∏©∆ƒ∏©«— ≥™π´ 10±◊∑Á\n");
-    printf("°È ¡◊æÓ¿÷¥¬ ¬˜∞°øÓ ∞Ì±‚ 10kg\n");
+    gotoxy(0, 0);
+    int x = 0, y = 15;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+    gotoxy(x + 54, 7);
+    printf("##########\n");
+    gotoxy(x + 54, 11);
+    printf("‚óé\n");
+    while (1) {
+        gotoxy(x + 25, 15);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+        printf("‚Üë 10 Beautiful Trees\n");
+        gotoxy(x + 25, 17);
+        printf("‚Üì Dead, Cold meats 22 pounds(10kg)\n");
+
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), MINT_COLOR);
+        if (y == 15) {
+            gotoxy(x + 25, 15);
+            printf("‚Üë 10 Beautiful Trees\n");
+        }
+        else {
+            gotoxy(x + 25, 17);
+            printf("‚Üì Dead, Cold meats 22 pounds(10kg)\n");
+        }
+        char temp = _getch();
+        if (temp == 'w' || temp == 'W') {
+            if (y > 15) y--;
+        }
+        else if (temp == 's' || temp == 'S') {
+            if (y < 17) y++;
+        }
+        else if (temp == ' ') {
+            if (y > 15) q8 = 1;
+            break;
+        }
+    }
 }
 int question_9() {
-    printf("°Ë ¿¸ºº∞Ëø° «œ≥™π€ø° æ¯¥¬ øœ∫Æ«— æÁ¿⁄ƒƒ«ª≈Õ\n");
-    printf("°È ø≠Ω…»˜ ªÏæ∆ø¬ ∞≥πﬂ¿⁄ 5∏Ì\n");
+    gotoxy(0, 0);
+    int x = 0, y = 15;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+    gotoxy(x + 54, 7);
+    printf("‚ñ£\n");
+    gotoxy(x + 54, 11);
+    printf("‚óã‚óã‚óã‚óã‚óã\n");
+    while (1) {
+        gotoxy(x + 25, 15);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+        printf("‚Üë The only perfect quantum computer in the world\n");
+        gotoxy(x + 25, 17);
+        printf("‚Üì 5 hardworking developers\n");
+
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), MINT_COLOR);
+        if (y == 15) {
+            gotoxy(x + 25, 15);
+            printf("‚Üë The only perfect quantum computer in the world\n");
+        }
+        else {
+            gotoxy(x + 25, 17);
+            printf("‚Üì 5 hardworking developers\n");
+        }
+        char temp = _getch();
+        if (temp == 'w' || temp == 'W') {
+            if (y > 15) y--;
+        }
+        else if (temp == 's' || temp == 'S') {
+            if (y < 17) y++;
+        }
+        else if (temp == ' ') {
+            if (y > 15) q9 = 1;
+            break;
+        }
+    }
 }
 int question_10() {
-    printf("°Ë ¥ÁΩ≈¿« 10≥‚¡ˆ±‚ ƒ£±∏\n");
-    printf("°È ¥ÁΩ≈¿« 10≥‚¡ˆ±‚ ƒ£±∏¿« ªÁ√Ã\n");
+    gotoxy(0, 0);
+    int x = 0, y = 15;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+    gotoxy(x + 54, 7);
+    printf("‚óã\n");
+    gotoxy(x + 54, 11);
+    printf("‚óã\n");
+    while (1) {
+        gotoxy(x + 25, 15);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+        printf("‚Üë your old friend\n");
+        gotoxy(x + 25, 17);
+        printf("‚Üì your old friend's cousin\n");
+
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), MINT_COLOR);
+        if (y == 15) {
+            gotoxy(x + 25, 15);
+            printf("‚Üë your old friend\n");
+        }
+        else {
+            gotoxy(x + 25, 17);
+            printf("‚Üì your old friend's cousin\n");
+        }
+        char temp = _getch();
+        if (temp == 'w' || temp == 'W') {
+            if (y > 15) y--;
+        }
+        else if (temp == 's' || temp == 'S') {
+            if (y < 17) y++;
+        }
+        else if (temp == ' ') {
+            if (y > 15) q10 = 1;
+            break;
+        }
+    }
 }
 
 int track() {
     int x = 0, y = 8;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
     gotoxy(x, y);
     printf("                                        |---|---|---|---|---|---|---|---|---|\n");
     printf("                                    |---|---|\n");
@@ -166,18 +542,152 @@ int track() {
 }
 int trolley() {
     int x = 10, y = 7;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
     gotoxy(x, y);
     printf(" ______________\n");
-    gotoxy(x, y+1);
-    printf("|¢√¢√¢√¢√¢√¢√¢√|\n");
-    gotoxy(x, y+2);
-    printf(" _°›°›°›__°›°›°›\n");
+    gotoxy(x, y + 1);
+    printf("|‚ñ£‚ñ£‚ñ£‚ñ£‚ñ£‚ñ£‚ñ£|\n");
+    gotoxy(x, y + 2);
+    printf(" _‚óé‚óé‚óé__‚óé‚óé‚óé\n");
+}
+
+void slowPrint(unsigned long speed, const char* s) {
+    int i = 0;
+    while (s[i] != 0) {
+        printf("%c", s[i++]);
+        fflush(stdout);
+        Sleep(speed);
+    }
+}
+
+void Ending() {
+    system("cls");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+    printf("===============================================================================\n");
+    printf("                 #<<<<<<<<<THE RESULT U HAVE CHOOSEN>>>>>>>>>>#\n");
+    printf("===============================================================================\n");
+    if (q1 == 1) {
+        slowPrint(1, "\nThank U! Now I can live this life.\n");
+    }
+    else if (q1 == 0) {
+        slowPrint(1, "\nOh, my... Where is my grandson?\n");
+    }
+    if (q2 == 1) {
+        slowPrint(1, "\nNow, I can kill somebody AGAIN!\n");
+    }
+    else if (q2 == 0) {
+        slowPrint(1, "\nI...I'll really word hard. I promise to god!\n");
+    }
+    if (q3 == 1) {
+        slowPrint(1, "\nWe decide to bring our child from that place. We want to live with our child.\n");
+    }
+    else if (q3 == 0) {
+        slowPrint(1, "\nLife is too short. So, we decide to our child make happy. We're so sorry to him.\n");
+    }
+    if (q4 == 1) {
+        slowPrint(1, "\nI don't know how can I live. Am I import person that 5 people?\n");
+    }
+    else if (q4 == 0) {
+        slowPrint(1, "\nWe are sorry for that person. But we are 5 people.\n");
+    }
+    if (q5 == 1) {
+        slowPrint(1, "\nThank you to save me. Now I can live with hope.\n");
+    }
+    else if (q5 == 0) {
+        slowPrint(1, "\nWe can say nothing. Pity.\n");
+    }
+    if (q6 == 1) {
+        slowPrint(1, "\nNow we should go collect taxes.\n");
+    }
+    else if (q6 == 0) {
+        slowPrint(1, "\nNow, I should go to the meeting with politicians.\n");
+    }
+    if (q7 == 1) {
+        slowPrint(1, "\n‚ô•MeoW‚ô•\n");
+    }
+    else if (q7 == 0) {
+        slowPrint(1, "\nLet's not play on the railroad tracks anymore, OK?\n");
+    }
+    if (q8 == 0) {
+        slowPrint(1, "\nso GREEN\n");
+    }
+    else if (q8 == 1) {
+        slowPrint(1, "\nso DEAD\n");
+    }
+    if (q9 == 0) {
+        slowPrint(1, "\nThe time of man has come to an end.\n");
+    }
+    else if (q9 == 1) {
+        slowPrint(1, "\nWas today the deadline for that program? Ugh...\n");
+    }
+    if (q10 == 0) {
+        slowPrint(1, "\nThank you, my friend. So, where's my cousin?\n");
+    }
+    else if (q10 == 1) {
+        slowPrint(1, "\nYou killed my cousin and your friend too! Are you PSYCHO or something?\n");
+    }
 }
 void playGame() {
-    while (1) {
-        system("cls");
-        track();
-        trolley();
-        int userInput = keyControl();
+    srand(time(NULL));
+    int g = 1;
+    while (g <= 10) {
+        switch (g) {
+        case 1:
+            system("cls");
+            track();
+            trolley();
+            question_1();
+        case 2:
+            system("cls");
+            track();
+            trolley();
+            question_2();
+        case 3:
+            track();
+            trolley();
+            question_3();
+        case 4:
+            system("cls");
+            track();
+            trolley();
+            question_4();
+        case 5:
+            system("cls");
+            track();
+            trolley();
+            question_5();
+        case 6:
+            track();
+            trolley();
+            question_6();
+        case 7:
+            system("cls");
+            track();
+            trolley();
+            question_7();
+        case 8:
+            system("cls");
+            track();
+            trolley();
+            question_8();
+        case 9:
+            system("cls");
+            track();
+            trolley();
+            question_9();
+        case 10:
+            system("cls");
+            track();
+            trolley();
+            question_10();
+        }
+        while (1) {
+            if (keyControl() == SUBMIT) {
+                break;
+                g++;
+            }
+        }
+        break;
     }
+    Ending();
 }

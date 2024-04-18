@@ -3,13 +3,13 @@
 int main(void) {
 	system("mode con:cols=80 lines=30");
 	hideCursor();
-	srand(GetTickCount());
 
 	while (1){
 	system("cls");
 	int menuCode = drawMenu();
 	if (menuCode == 0) {
 		playGame();
+		break;
 	}
 	else if (menuCode == 1) {
 		HowtoPlay();
