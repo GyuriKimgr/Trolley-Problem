@@ -17,6 +17,16 @@
 
 #define MINT_COLOR 10
 #define DEFALT_COLOR 15
+int q1 = 0;
+int q2 = 0;
+int q3 = 0;
+int q4 = 0;
+int q5 = 0;
+int q6 = 0;
+int q7 = 0;
+int q8 = 0;
+int q9 = 0;
+int q10 = 0;
 
 void hideCursor() { //깜박이는 커서 숨김
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -67,6 +77,7 @@ int keyControl()//키보드 이벤트 처리
     else if (temp == 'd' || temp == 'D') return RIGHT;
     else if (temp == ' ') return SUBMIT;
 }
+
 int drawMenu() {
     int x = 35, y = 20; //메뉴 위치 설정
     printf("\n\n\n");
@@ -171,7 +182,6 @@ int question_1() {
             gotoxy(x + 25, 17);
             printf("↓ Abandoned elderly person\n");
         }
-
         char temp = _getch();
         if (temp == 'w' || temp == 'W') {
             if (y > 15) y--;
@@ -180,6 +190,7 @@ int question_1() {
             if (y < 17) y++;
         }
         else if (temp == ' ') {
+            if (y > 15) q1 = 1;
             break;
         }
     }
@@ -217,6 +228,7 @@ int question_2() {
             if (y < 17) y++;
         }
         else if (temp == ' ') {
+            if (y > 15) q2 = 1;
             break;
         }
     }
@@ -253,6 +265,7 @@ int question_3() {
             if (y < 17) y++;
         }
         else if (temp == ' ') {
+            if (y > 15) q3 = 1;
             break;
         }
     }
@@ -289,6 +302,7 @@ int question_4() {
             if (y < 17) y++;
         }
         else if (temp == ' ') {
+            if (y > 15) q4 = 1;
             break;
         }
     }
@@ -325,6 +339,7 @@ int question_5() {
             if (y < 17) y++;
         }
         else if (temp == ' ') {
+            if (y > 15) q5 = 1;
             break;
         }
     }
@@ -361,6 +376,7 @@ int question_6() {
             if (y < 17) y++;
         }
         else if (temp == ' ') {
+            if (y > 15) q6 = 1;
             break;
         }
     }
@@ -397,6 +413,7 @@ int question_7() {
             if (y < 17) y++;
         }
         else if (temp == ' ') {
+            if (y > 15) q7 = 1;
             break;
         }
     }
@@ -433,6 +450,7 @@ int question_8() {
             if (y < 17) y++;
         }
         else if (temp == ' ') {
+            if (y > 15) q8 = 1;
             break;
         }
     }
@@ -469,6 +487,7 @@ int question_9() {
             if (y < 17) y++;
         }
         else if (temp == ' ') {
+            if (y > 15) q9 = 1;
             break;
         }
     }
@@ -505,6 +524,7 @@ int question_10() {
             if (y < 17) y++;
         }
         else if (temp == ' ') {
+            if (y > 15) q10 = 1;
             break;
         }
     }
@@ -531,6 +551,82 @@ int trolley() {
     printf(" _◎◎◎__◎◎◎\n");
 }
 
+void slowPrint(unsigned long speed, const char* s) {
+    int i = 0;
+    while (s[i] != 0) {
+        printf("%c", s[i++]);
+        fflush(stdout);
+        Sleep(speed);
+    }
+}
+
+void Ending() {
+    system("cls");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), DEFALT_COLOR);
+    printf("===============================================================================\n");
+    printf("                 #<<<<<<<<<THE RESULT U HAVE CHOOSEN>>>>>>>>>>#\n");
+    printf("===============================================================================\n");
+    if (q1 == 1) {
+        slowPrint(1, "\nThank U! Now I can live this life.\n");
+    }
+    else if (q1 == 0) {
+        slowPrint(1, "\nOh, my... Where is my grandson?\n");
+    }
+    if (q2 == 1) {
+        slowPrint(1, "\nNow, I can kill somebody AGAIN!\n");
+    }
+    else if (q2 == 0) {
+        slowPrint(1, "\nI...I'll really word hard. I promise to god!\n");
+    }
+    if (q3 == 1) {
+        slowPrint(1, "\nWe decide to bring our child from that place. We want to live with our child.\n");
+    }
+    else if (q3 == 0) {
+        slowPrint(1, "\nLife is too short. So, we decide to our child make happy. We're so sorry to him.\n");
+    }
+    if (q4 == 1) {
+        slowPrint(1, "\nI don't know how can I live. Am I import person that 5 people?\n");
+    }
+    else if (q4 == 0) {
+        slowPrint(1, "\nWe are sorry for that person. But we are 5 people.\n");
+    }
+    if (q5 == 1) {
+        slowPrint(1, "\nThank you to save me. Now I can live with hope.\n");
+    }
+    else if (q5 == 0) {
+        slowPrint(1, "\nWe can say nothing. Pity.\n");
+    }
+    if (q6 == 1) {
+        slowPrint(1, "\nNow we should go collect taxes.\n");
+    }
+    else if (q6 == 0) {
+        slowPrint(1, "\nNow, I should go to the meeting with politicians.\n");
+    }
+    if (q7 == 1) {
+        slowPrint(1, "\n♥MeoW♥\n");
+    }
+    else if (q7 == 0) {
+        slowPrint(1, "\nLet's not play on the railroad tracks anymore, OK?\n");
+    }
+    if (q8 == 0) {
+        slowPrint(1, "\nso GREEN\n");
+    }
+    else if (q8 == 1) {
+        slowPrint(1, "\nso DEAD\n");
+    }
+    if (q9 == 0) {
+        slowPrint(1, "\nThe time of man has come to an end.\n");
+    }
+    else if (q9 == 1) {
+        slowPrint(1, "\nWas today the deadline for that program? Ugh...\n");
+    }
+    if (q10 == 0) {
+        slowPrint(1, "\nThank you, my friend. So, where's my cousin?\n");
+    }
+    else if (q10 == 1) {
+        slowPrint(1, "\nYou killed my cousin and your friend too! Are you PSYCHO or something?\n");
+    }
+}
 void playGame() {
     srand(time(NULL));
     int g = 1;
@@ -593,4 +689,5 @@ void playGame() {
         }
         break;
     }
+    Ending();
 }
