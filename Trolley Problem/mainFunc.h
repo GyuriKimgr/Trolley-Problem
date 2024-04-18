@@ -44,29 +44,6 @@ void printCountdown(int seconds) { // 카운트다운 출력
     printf("\r%d seconds ", seconds); // 공백으로 덮어쓰기
     fflush(stdout); // 출력버퍼 지우기
 }
-void timerLoop() {
-    time_t sTime, cTime;
-    int c = 1;
-    while (c <= 10) {
-        sTime = time(NULL) + 10;
-        int timerE = 0;
-        do { // timer
-            cTime = time(NULL);
-            if (sTime - cTime >= 0) {
-                printCountdown(sTime - cTime);
-                Sleep(1000);
-            }
-            else {
-                timerE = 1;
-                break;
-            }
-        } while (1);
-
-        if (timerE) {
-            c++;
-        }
-    }
-}
 
 int keyControl()//키보드 이벤트 처리
 {
